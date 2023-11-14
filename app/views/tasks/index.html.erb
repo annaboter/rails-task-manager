@@ -1,4 +1,27 @@
 <h1>My tasks</h1>
-<% @tasks.each do |task| %>
-<p><%= task.title %> - <%= task.details %></p>
-<% end %>
+<ul class="list-unstyled">
+  <% @tasks.each do |task| %>
+
+  <% if task.completed?%>
+    <li class="">
+      <input type="checkbox" checked>
+      <p class="m-0"><%= link_to task.title, task_path(task) %></p>
+    </li>
+
+  <% else %>
+
+    <li>
+      <input type="checkbox">
+      <p class="m-0"><%= link_to task.title, task_path(task) %></p>
+    </li>
+  <% end %>
+
+  <%= link_to "Delete",
+    task_path(task),
+    data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}
+  %>
+
+  <% end %>
+</ul>
+
+<p><%= link_to "Add new task", tasks_new_path %></p>
